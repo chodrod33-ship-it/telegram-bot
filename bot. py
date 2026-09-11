@@ -1,0 +1,24 @@
+import asyncio
+import logging
+import sys
+from aiogram import Bot, Dispatcher, html
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+from aiogram.filters import CommandStart
+from aiogram.types import Message
+
+TOKEN = "8819869390:AAFfnlbN1GYLNAuI3gqE9YvL4W1-jVKHcxI"
+
+dp = Dispatcher()
+
+@dp.message(CommandStart())
+async def command_start_handler(message: Message) -> None:
+    await message.answer(f"مرحباً بك، {html.quote(message.from_user.full_name)}! بوت الحماية يعمل بنجاح.")
+
+async def main() -> None:
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    asyncio.run(main())
